@@ -16,7 +16,15 @@
 #include <stdarg.h>
 #include <unistd.h>
 
-void	ft_putnbr(int n);
-void	ft_putchar(char c);
+int ft_putnbr(int n);
+int ft_putchar(char c);
+int ft_putstr(char *s);
+int ft_format(va_list args, char format);
+int ft_putnbr_u(unsigned int n);
+int ft_hex(unsigned int n, int j);
+int ft_ptr(long n, int j);
+int	ft_printf(const char *ptr, ...);
+int	ft_size(int n);
+size_t	ft_strlen(const char *s);
 
 # endif

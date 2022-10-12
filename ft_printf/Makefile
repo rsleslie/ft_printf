@@ -11,13 +11,13 @@
 # **************************************************************************** #
 
 NAME = libftprint.a
-SRCS = test.c
+SRCS = ft_printf.c ft_printf_utils.c
 OBJ := ${SRCS:.c=.o}
 
 all: $(NAME)
 
 $(NAME):
-	cc -Wall -Wextra -Werror -c $(SRCS)
+	clang -Wall -Wextra -Werror -c $(SRCS)
 	ar -rc $(NAME) $(OBJ)
 
 clean:

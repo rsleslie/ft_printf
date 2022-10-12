@@ -11,36 +11,102 @@
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-#include <unistd.h>
-#include <stdio.h>
 
-void	ft_printf(const char* ptr, ...)
+int	ft_printf(const char *ptr, ...)
 {
-	va_list args;
-	int i;
-	int x;
-	char *days[7];
+	va_list	args;
+	int 	i;
 
+	i = 0;
 	va_start(args, ptr);
-	x = 0;
-	while(*ptr != '\0')
+	while (ptr[i] != '\0')
 	{
-		days[x] = va_arg(args, char *);
-		i = 0;
-		while (days[x][i] != '\0')
+		if (ptr[i] == '%')
 		{
-			write(1, &days[x][i], 1);
 			i++;
+			ft_format(args, ptr[i]);
 		}
-		write(1, "\n", 1);
-		ptr++;
-
+		else
+		{
+			write(1, &ptr[i], 1);
+		}
+		i++;
 	}
 	va_end(args);
+	return (0);
 }
 
-int main()
+int	ft_format(va_list args, char format)
 {
-	ft_printf("sat");
-	printf("sf\n");
+	if (format == 'i' || format == 'd')
+		return (ft_putnbr(va_arg(args, int)));
+	else if (format == 's')
+		return (ft_putstr(va_arg(args, char *)));
+	else if (format == 'c')
+		return (ft_putchar(va_arg(args, int)));
+	if (format == 'u')
+		return (ft_putnbr_u(va_arg(args, int)));
+	else if (format == '%')
+		return (ft_putchar(format));
+	if (format == 'x')
+		return (ft_hex(va_arg(args, int), 32));
+	if (format == 'X')
+		return (ft_hex(va_arg(args, int), 0));
+	if (format == 'p')
+		return (ft_ptr(va_arg(args, long), 32));
+	return (format);
+}
+
+int	ft_hex(unsigned int n, int j)
+{
+	char	div[17];
+	int		i;
+	int		x;
+
+	x = 0;
+	while (n != 0)
+	{
+		i = n % 16;
+		n = n / 16;
+		if (i < 9)
+			div[x] = i + '0';
+		else
+			div[x] = i + '7' + j;
+		x++;
+	}
+	div[x] = '\0';
+	while (x != 0)
+	{	
+		x--;
+		ft_putchar(div[x]);
+	}
+	return (ft_strlen(div));
+}
+
+int	ft_ptr(long n, int j)
+{
+	char	div[17];
+	int		i;
+	int		x;
+
+	x = 0;
+	while (n != 0)
+	{
+		i = n % 16;
+		n = n / 16;
+		if (i < 9)
+			div[x] = i + '0';
+		else
+			div[x] = i + '7' + j;
+		x++;
+	}
+	div[x] = '\0';
+	ft_putchar('0');
+	ft_putchar('x');
+	while (x != 0)
+	{	
+		x--;
+		ft_putchar(div[x]);
+	}
+	return (ft_strlen(div));
 }
