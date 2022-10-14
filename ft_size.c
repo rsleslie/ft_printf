@@ -1,40 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*   ft_size.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rleslie- <rleslie-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/05 22:31:59 by rleslie-          #+#    #+#             */
-/*   Updated: 2022/10/13 22:44:55 by rleslie-         ###   ########.fr       */
+/*   Created: 2022/10/14 15:58:46 by rleslie-          #+#    #+#             */
+/*   Updated: 2022/10/14 15:58:47 by rleslie-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	ft_printf(const char *ptr, ...)
+int	ft_size(int n)
 {
-	va_list	args;
-	int		i;
-	int		len;
+	int	x;
+	int	i;
 
-	i = 0;
-	len = 0;
-	va_start(args, ptr);
-	while (ptr[i] != '\0')
+	i = n;
+	x = 0;
+	if (n <= 0)
+		x = 1;
+	if (n < 0)
+		n *= -1;
+	while (i != 0)
 	{
-		if (ptr[i] == '%')
-		{
-			i++;
-			len = ft_format(args, ptr[i], len);
-		}
-		else
-		{
-			write(1, &ptr[i], 1);
-			len += 1;
-		}
-		i++;
+		i = i / 10;
+		x++;
 	}
-	va_end(args);
-	return (len);
+	return (x);
 }

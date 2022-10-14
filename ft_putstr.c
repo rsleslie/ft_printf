@@ -1,40 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*   ft_putstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rleslie- <rleslie-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/05 22:31:59 by rleslie-          #+#    #+#             */
-/*   Updated: 2022/10/13 22:44:55 by rleslie-         ###   ########.fr       */
+/*   Created: 2022/10/14 15:58:19 by rleslie-          #+#    #+#             */
+/*   Updated: 2022/10/14 15:58:34 by rleslie-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+#include <stdio.h>
 
-int	ft_printf(const char *ptr, ...)
+int	ft_putstr(char *s)
 {
-	va_list	args;
-	int		i;
-	int		len;
+	size_t	i;
 
 	i = 0;
-	len = 0;
-	va_start(args, ptr);
-	while (ptr[i] != '\0')
+	if (s == NULL)
 	{
-		if (ptr[i] == '%')
-		{
-			i++;
-			len = ft_format(args, ptr[i], len);
-		}
-		else
-		{
-			write(1, &ptr[i], 1);
-			len += 1;
-		}
-		i++;
+		return (write(1, "(null)", 6));
+		i = 6;
 	}
-	va_end(args);
-	return (len);
+	else
+	{
+		while (s[i] != '\0')
+		{
+			ft_putchar(s[i]);
+			i++;
+		}
+	}
+	return (i);
 }

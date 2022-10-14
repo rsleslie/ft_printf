@@ -1,40 +1,49 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*   ft_ptr.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rleslie- <rleslie-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/05 22:31:59 by rleslie-          #+#    #+#             */
-/*   Updated: 2022/10/13 22:44:55 by rleslie-         ###   ########.fr       */
+/*   Created: 2022/10/14 15:47:21 by rleslie-          #+#    #+#             */
+/*   Updated: 2022/10/14 15:51:41 by rleslie-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	ft_printf(const char *ptr, ...)
+int	ft_ptr(unsigned long n, int j)
 {
-	va_list	args;
+	char	div[32];
 	int		i;
-	int		len;
+	int		x;
 
-	i = 0;
-	len = 0;
-	va_start(args, ptr);
-	while (ptr[i] != '\0')
+	x = 0;
+	if (n == 0)
+		return (write(1, "(nil)", 5));
+	while (n != 0)
 	{
-		if (ptr[i] == '%')
-		{
-			i++;
-			len = ft_format(args, ptr[i], len);
-		}
+		i = n % 16;
+		n = n / 16;
+		if (i <= 9)
+			div[x] = i + '0';
 		else
-		{
-			write(1, &ptr[i], 1);
-			len += 1;
-		}
-		i++;
+			div[x] = i + '7' + j;
+		x++;
 	}
-	va_end(args);
-	return (len);
+	div[x] = '\0';
+	ft_putchar_ptr(div, x);
+	x = ft_strlen(div) + 2;
+	return (x);
+}
+
+void	ft_putchar_ptr(char *div, int x)
+{
+	ft_putchar('0');
+	ft_putchar('x');
+	while (x != 0)
+	{	
+		x--;
+		ft_putchar(div[x]);
+	}
 }

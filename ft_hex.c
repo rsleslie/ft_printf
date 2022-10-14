@@ -1,40 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*   ft_hex.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rleslie- <rleslie-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/05 22:31:59 by rleslie-          #+#    #+#             */
-/*   Updated: 2022/10/13 22:44:55 by rleslie-         ###   ########.fr       */
+/*   Created: 2022/10/13 22:40:59 by rleslie-          #+#    #+#             */
+/*   Updated: 2022/10/13 22:43:39 by rleslie-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	ft_printf(const char *ptr, ...)
+int	ft_hex(unsigned int n, int j, int x, int i)
 {
-	va_list	args;
-	int		i;
-	int		len;
+	char	div[17];
 
-	i = 0;
-	len = 0;
-	va_start(args, ptr);
-	while (ptr[i] != '\0')
+	x = 0;
+	if (n == 0)
 	{
-		if (ptr[i] == '%')
-		{
-			i++;
-			len = ft_format(args, ptr[i], len);
-		}
-		else
-		{
-			write(1, &ptr[i], 1);
-			len += 1;
-		}
-		i++;
+		div[x] = '0';
+		x++;
 	}
-	va_end(args);
-	return (len);
+	while (n != 0)
+	{
+		i = n % 16;
+		n = n / 16;
+		if (i <= 9)
+			div[x] = i + '0';
+		else
+			div[x] = i + '7' + j;
+		x++;
+	}
+	div[x] = '\0';
+	while (x != 0)
+	{	
+		x--;
+		ft_putchar(div[x]);
+	}
+	return (ft_strlen(div));
 }

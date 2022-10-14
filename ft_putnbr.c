@@ -1,40 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*   ft_putnbr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rleslie- <rleslie-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/05 22:31:59 by rleslie-          #+#    #+#             */
-/*   Updated: 2022/10/13 22:44:55 by rleslie-         ###   ########.fr       */
+/*   Created: 2022/10/14 15:54:05 by rleslie-          #+#    #+#             */
+/*   Updated: 2022/10/14 15:57:39 by rleslie-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	ft_printf(const char *ptr, ...)
+int	ft_putnbr(int n)
 {
-	va_list	args;
-	int		i;
-	int		len;
+	int	x;
 
-	i = 0;
-	len = 0;
-	va_start(args, ptr);
-	while (ptr[i] != '\0')
+	x = ft_size(n);
+	if (n == -2147483648)
 	{
-		if (ptr[i] == '%')
-		{
-			i++;
-			len = ft_format(args, ptr[i], len);
-		}
-		else
-		{
-			write(1, &ptr[i], 1);
-			len += 1;
-		}
-		i++;
+		write(1, "-2", 2);
+		n = 147483648;
 	}
-	va_end(args);
-	return (len);
+	if (n < 0)
+	{
+		ft_putchar('-');
+		n *= -1;
+	}
+	if (n >= 0 && n <= 9)
+		ft_putchar (n + '0');
+	else
+	{
+		if (n > 9)
+		{
+			ft_putnbr(n / 10);
+			n = n % 10;
+		}
+		ft_putchar(n + '0');
+	}
+	return (x);
 }
