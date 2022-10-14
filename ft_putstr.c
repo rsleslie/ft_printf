@@ -6,12 +6,11 @@
 /*   By: rleslie- <rleslie-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 15:58:19 by rleslie-          #+#    #+#             */
-/*   Updated: 2022/10/14 15:58:34 by rleslie-         ###   ########.fr       */
+/*   Updated: 2022/10/14 16:12:54 by rleslie-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-#include <stdio.h>
 
 int	ft_putstr(char *s)
 {
